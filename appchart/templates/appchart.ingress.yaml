@@ -1,0 +1,18 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-app
+spec:
+  ingressClassName: {{ .Values.appservice.NameIngressClass }}
+  rules:
+  - host: "appchart.{{ .Values.appchart.NginxDomain }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: service-app
+            port:
+              number: {{ .Values.appservice.port | default "80" }}

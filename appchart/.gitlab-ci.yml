@@ -1,0 +1,23 @@
+stages:
+  - deploy
+
+variables:
+  KUBECONFIG: /etc/deploy/config
+  STAGING_NAMESPACE: app-stage
+  PRODUCTION_NAMESPACE: app-prod
+
+deploy:
+  stage: deploy
+  image: centos:7
+  script:
+    - helm upgrade -i appchart ./
+
+
+# deploy:
+#   image:
+#     name: bitnami/kubectl:latest
+#     entrypoint: ['']
+#   script:
+#     - kubectl config get-contexts
+#     - kubectl config use-context path/to/agent/repository:agent-name
+#     - kubectl get pods

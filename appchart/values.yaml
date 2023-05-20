@@ -1,0 +1,20 @@
+appchart:
+  image: "zmaalz/reg-forms-app"
+  version: "latest" # Версия приложения 
+  replicas: 1 # Количество реплик
+  port: "80" # Порт web сервера (по умолчанию используется 80)
+  NginxDomain: "familym.ru"
+appservice:
+  port: "80" # (по умолчанию используется 80)
+  NameIngressClass: nginx
+db:
+  version: "13-alpine" # Версия приложения 
+  replicas: 1 # Количество реплик
+  port: "5432" # Порт PostgreSQL (по умолчанию используется 5432)
+  StorageClass: "csi-rbd-sc" # Класс хранилища 
+  StorageSpace: "200Mi" # (по умолчанию используется 10Gi)
+  pgpass: "postgres"
+  pguser: "postgres"
+  CSIrbdSecretId: "rbdkube"
+  CSIrbdSecretKey: ""
+  

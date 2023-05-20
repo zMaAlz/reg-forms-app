@@ -1,0 +1,18 @@
+stages:
+  - triggers
+
+triggers_build:
+  stage: triggers
+  trigger:
+    include: dockerimg/.gitlab-ci.yml
+  rules:
+    - changes:
+      - dockerimg/*
+triggers_deploy:
+  stage: triggers
+  trigger:
+    include: appchart/.gitlab-ci.yml
+  only:
+    - tags
+  except:
+    - branches

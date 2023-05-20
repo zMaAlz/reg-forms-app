@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-app
+spec:
+  selector:
+    group: app
+  ports:
+    {{- with .Values.appservice }}
+    - name: web
+      port: {{ .port | default "80" }}
+      targetPort: app-web-port
+    {{- end }}
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-db
+spec:
+  selector:
+    group: db
+  ports:
+    {{- with .Values.db }}
+    - name: db
+      port: {{ .port | default "5432" }}
+      targetPort: db-port
+    {{- end }}
+  type: ClusterIP

@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    group: app
+  name: {{ $.Release.Name | lower }}-app
+spec:
+  replicas: {{ .Values.appchart.replicas | default "2" }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      group: app
+  template:
+    metadata:
+      labels:
+        group: app
+    spec:
+      containers:
+      - name: {{ $.Release.Name | lower }}-app
+      {{- with .Values.appchart }}
+        image: {{ .image }}:{{ .version }}
+        ports:
+          - name: app-web-port
+            containerPort: {{ .port | default "80" }}
+        volumeMounts:
+          - name: config
+            mountPath: /etc/nginx/sites-available
+            readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: {{ $.Release.Name | lower }}-config
+      {{- end }}
