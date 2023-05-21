@@ -1,27 +1,26 @@
+---
 stages:
-  - build
+  - Build_and_Push_image
 variables:
-  CI_REGISTRY:
-    description: "Registry for sending images"
-    value: "docker.io"
   IMAGE_NAME:
     description: "Tag for docker images"
     value: "zmaalz/reg-forms-app"
   IMAGE_TAG:
     description: "Tag for docker images"
-    value: "latest"
-  CI_REGISTRY_USER:
-    description: "User Registry"
-  CI_REGISTRY_PASSWORD:
-    description: "Password Registry" 
-build:
-  stage: build
-  image: docker:dind
-  services:
-    - docker:dind
+    value: "0.1.1"
+Build_and_Push_image:
+  stage: Build_and_Push_image
   before_script:
     - docker info
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-   script:
-    - docker build --pull -t "${IMAGE_NAME}:${IMAGE_TAG}" .
-    - docker push "${IMAGE_NAME}:${IMAGE_TAG}"
+    - docker build --pull -t ${IMAGE_NAME}:${IMAGE_TAG} .
+  script:
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}
+    - docker push ${IMAGE_NAME}:${IMAGE_TAG}
+  after_script:
+      - echo "Cleaning up"
+      - rm -rf ${CI_PROJECT_DIR}
+      - docker image rm ${IMAGE_NAME}:${IMAGE_TAG}
+  tags:
+    - linux
+  only:
+    - main

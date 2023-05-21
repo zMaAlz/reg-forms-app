@@ -1,6 +1,6 @@
+---
 stages:
   - triggers
-
 triggers_build:
   stage: triggers
   trigger:

@@ -1,20 +1,20 @@
 appchart:
-  image: "zmaalz/reg-forms-app"
-  version: "latest" # Версия приложения 
+  image: "zmaalz/reg-forms-app" # Название docker образа
+  version: "0.2.1" # Версия приложения 
   replicas: 1 # Количество реплик
   port: "80" # Порт web сервера (по умолчанию используется 80)
   NginxDomain: "familym.ru"
 appservice:
   port: "80" # (по умолчанию используется 80)
-  NameIngressClass: nginx
+  NameIngressClass: nginx # Класс kebernetes ingress
 db:
   version: "13-alpine" # Версия приложения 
   replicas: 1 # Количество реплик
   port: "5432" # Порт PostgreSQL (по умолчанию используется 5432)
   StorageClass: "csi-rbd-sc" # Класс хранилища 
   StorageSpace: "200Mi" # (по умолчанию используется 10Gi)
-  pgpass: "postgres"
+  pgpass: "postgres" # Учетная запись для PostgreSQL
   pguser: "postgres"
-  CSIrbdSecretId: "rbdkube"
+  CSIrbdSecretId: "rbdkube" # учетная запись для подключения к CSI провайдеру 
   CSIrbdSecretKey: ""
   
