@@ -12,6 +12,7 @@ Build_and_Push_image:
   stage: Build_and_Push_image
   before_script:
     - docker info
+    - cd dockerimg
     - docker build --pull -t ${IMAGE_NAME}:${IMAGE_TAG} .
   script:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}

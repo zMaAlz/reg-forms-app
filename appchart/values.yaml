@@ -1,6 +1,6 @@
 appchart:
   image: "zmaalz/reg-forms-app" # Название docker образа
-  version: "0.2.1" # Версия приложения 
+  version: "0.2.0" # Версия приложения 
   replicas: 1 # Количество реплик
   port: "80" # Порт web сервера (по умолчанию используется 80)
   NginxDomain: "familym.ru"

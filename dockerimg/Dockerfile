@@ -1,6 +1,5 @@
-FROM centos:7
-COPY src/nginx.repo /etc/yum.repos.d/nginx.repo
-RUN yum install yum-utils -y && yum install nginx -y
-COPY src/index.html /usr/share/nginx/html/
-COPY src/Content /usr/share/nginx/html/Content/
+FROM ubuntu:20.04
+RUN apt update && apt install nginx -y
+COPY src/index.html /var/www/html
+COPY src/Content /var/www/html/Content/
 CMD ["nginx", "-g", "daemon off;"]

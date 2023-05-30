@@ -1,6 +1,6 @@
 ---
 stages:
-  - deploy
+  - Deploy_image_in_cluster
 variables:
   KUBECONFIG:
     description: "Kubernetes config folder"
@@ -9,10 +9,11 @@ variables:
     description: "Kubernetes config folder"
     value: "appchart"  
 deploy:
-  stage: deploy
+  stage: Deploy_image_in_cluster
   before_script:
+    - cd appchart
     - kubectl get pods
-  script:
+  script:  
     - helm upgrade -i ${NAME_HELM_CHART} ./
   after_script:
       - echo "Cleaning up"
